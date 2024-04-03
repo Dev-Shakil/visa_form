@@ -29,6 +29,7 @@
             }
           }
     </style>
+    <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
      <!--tailwind css cdn -->
     <script src="https://cdn.tailwindcss.com"></script>
