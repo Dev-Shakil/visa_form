@@ -226,9 +226,9 @@
     <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-indigo-300">
             <h5 class="modal-title" id="agentModalLabel">Add New Agent</h5>
-            <button type="button" class="btn-close btn text-red-700 font-bold" data-bs-dismiss="modal" aria-label="Close">X</button>
+            {{-- <button type="button" class="btn-close btn text-red-700 font-bold" data-bs-dismiss="modal" aria-label="Close">X</button> --}}
           </div>
 
          
@@ -241,11 +241,27 @@
                     
                     <div class="py-1">
                       <div class="font-semibold text-lg">Agent's Name</div>
-                      <input type="text" class="form-control uppercase" id="agent_name" name="agent_name" placeholder="">
+                      <input type="text" class="form-control uppercase" required id="agent_name" name="agent_name" placeholder="">
                     </div>
                     <div class="py-1">
                       <div class="font-semibold text-lg">Agent's Phone Number</div>
-                      <input type="text" class="form-control uppercase" id="agent_phone" name="agent_phone" placeholder="">
+                      <input type="text" class="form-control uppercase" required id="agent_phone" name="agent_phone" placeholder="">
+                    </div>
+                    <div class="py-1">
+                      <div class="font-semibold text-lg">Agent's Email</div>
+                      <input type="email" class="form-control " id="agent_email" name="agent_email" placeholder="">
+                    </div>
+                    <div class="py-1">
+                      <div class="font-semibold text-lg">Agent's Address</div>
+                      <input type="text" class="form-control uppercase" id="agent_address" name="agent_address" placeholder="">
+                    </div>
+                    <div class="py-1">
+                      <div class="font-semibold text-lg">Agent's Emergency Phone No</div>
+                      <input type="text" class="form-control uppercase" id="agent_e_phone" name="agent_e_phone" placeholder="">
+                    </div>
+                    <div class="py-1">
+                      <div class="font-semibold text-lg">Agent's Picture</div>
+                      <input type="file" class="form-control uppercase" id="agent_picture" name="agent_picture" placeholder="">
                     </div>
                    
                   </div>
@@ -1070,13 +1086,68 @@ $('#addcandidate').on('submit', function(e) {
               }
           });
       });
-// document.getElementById('pass_issue_date').addEventListener('change', function() {
-//   var issueDate = new Date(this.value);
-//   var expireDate = new Date(issueDate.getFullYear() + 10, issueDate.getMonth(), issueDate.getDate());
-//   var formattedExpireDate = formatDate(expireDate);
-//   console.log(formattedExpireDate);
-//   document.getElementById('pass_expire_date').value = formattedExpireDate;
-// });
+$('#addagent').on('submit', function(e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var formData = form.serialize();
+        // console.log(formData);
+        $.ajax({
+              url: form.attr('action'),
+              method: form.attr('method'),
+              data: form.serialize(),
+              success: function(response) {
+                
+                  console.log(response);
+                  
+                  Swal.fire({
+                      title: response.title,
+                      text: response.message,
+                      icon: response.icon,
+                      
+                  });
+                  if (response.redirect_url) {
+                            setTimeout(function() {
+                              var redirectUrl = window.location.origin + '/'+ response.redirect_url;
+                              window.location.href = redirectUrl;
+                            }, 3000);
+                    }
+                                          
+              },
+              error: function(response) {
+                
+                  console.log(response);
+                  var errorMessage = xhr.responseText;
+                  var regex = /SQLSTATE\[23000\]:.*Duplicate entry.*'(.+)' for key '(.+)'/;
+                  var matches = errorMessage.match(regex);
+                  var duplicateEntryValue = matches ? matches[1] : null;
+                  var duplicateEntryKey = matches ? matches[2] : null;
+
+                  console.log("Duplicate Entry Value:", duplicateEntryValue);
+                  console.log("Duplicate Entry Key:", duplicateEntryKey);
+                  Swal.fire({
+                      title: "Error",
+                      text: "Cannot add agent\n 1: Complete all fields are required\n 2: Same ID check",
+                      icon: 'error',
+                    
+                  });
+                  if (response.redirect_url) {
+                            setTimeout(function() {
+                              var redirectUrl = window.location.origin + '/'+ response.redirect_url;
+                              window.location.href = redirectUrl;
+                            }, 3000);
+                    }
+                  
+              }
+          });
+      });
+document.getElementById('pass_issue_date').addEventListener('change', function() {
+  var issueDate = new Date(this.value);
+  var expireDate = new Date(issueDate.getFullYear() + 10, issueDate.getMonth(), issueDate.getDate());
+  var formattedExpireDate = formatDate(expireDate);
+  console.log(formattedExpireDate);
+  document.getElementById('pass_expire_date').value = formattedExpireDate;
+});
 
 function formatDate(date) {
   date.setDate(date.getDate() - 1); // Subtract 1 day from the date

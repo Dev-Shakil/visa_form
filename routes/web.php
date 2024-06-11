@@ -4,6 +4,7 @@
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\EmbassyController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MailController;
@@ -37,7 +38,7 @@ Route::get('/check-email', [ViewController::class, 'checkEmail'])->name('checkEm
 Route::post('/password-reset', [ViewController::class, 'setnewpassword'])->name('password_reset');
 #user routes
 Route::any('/user/index', [UserController::class, 'index'])->name('user/index');
-Route::any('/agent/index', [UserController::class, 'agent_add'])->name('agent/index');
+Route::any('/agent/index', [AgentController::class, 'agent_add'])->name('agent/index');
 Route::any('/user/visaadd/{id}', [UserController::class, 'visa_add'])->name('user/visaadd');
 
 Route::get('/user/visasearch/{id}', [UserController::class, 'visa_search'])->name('user/visasearch');

@@ -13,5 +13,9 @@ class Agents extends Model
     protected $fillable = [
         'agent_name',
         'agent_phone',
+        'agent_email',
+        'agent_address',
+        'agent_e_phone',
+        'agent_picture',
     ];
 }
