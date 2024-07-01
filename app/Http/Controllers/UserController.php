@@ -174,7 +174,7 @@ class UserController extends Controller
             $visa->spon_id = strtoupper($request->input('spon_id'));
             $visa->spon_name_arabic = strtoupper($request->input('spon_name_arabic'));
             $visa->salary = strtoupper($request->input('salary'));
-            // $visa->spon_name_english = strtoupper($request->input('spon_name_english'));
+            $visa->spon_name_english = strtoupper($request->input('spon_name_english'));
             $visa->prof_name_arabic = strtoupper($request->input('prof_name_arabic'));
             $visa->prof_name_english = strtoupper($request->input('prof_name_english'));
             $visa->mofa_no = strtoupper($request->input('mofa_no'));

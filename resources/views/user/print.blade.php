@@ -94,19 +94,17 @@
             <div class="">
               <div class="h-[180px] w-[170px] border-1 border border-black " ></div>
             </div>
-            <div  class="flex flex-col justify-start items-end ml-[170px]">
-            
-           
-              <svg id="barcode1" class="w-[300px]">
-                  <!--<span class=' w-[190px] absolute bottom-[-10px] left-8 text-center'>    Visa Date:  {{$candidates[0]->visa_date2}}</span>-->
-              </svg>
-              
-           
+            <div class="flex flex-col justify-center items-center ml-[20px]">
+                <svg id="barcode1" class="w-[300px] mb-2">
+                    <!-- SVG content -->
+                </svg>
+                <img src="{{ asset('assets/images/tree.jpg') }}" alt="Tree" class="w-[20%]">
             </div>
+          
             <div  class="w-[300px] text-end text-xl">
-              <p class="font-bold text-4xl">
+              {{-- <p class="font-bold text-4xl">
                 {{$candidates[0]->mofa_no}}
-              </p>
+              </p> --}}
   
               <p class="text-lg arb">
                 
@@ -746,6 +744,11 @@
               : اسم و عنوان الشركة أو اسم الشخص و عنوانه بالمملكة
             </div>
           </div>
+          <div class="border-b border-black flex justify-between">
+            <div class="text-xl border-black basis-7/12">
+              <b>{{$candidates[0]->spon_name_english}}</b>
+            </div>
+          </div>
           <div class="border-b border-black pb-1 flex" >
             <div class="flex text-xl border-black basis-8/12">
               I under signed hereby that all the information I have provided are
@@ -1016,10 +1019,12 @@
             First Party
           </div>
           <div class="basis-6/12 flex text-2xl font-semibold p-1">
-           : {{$candidates[0]->spon_name_arabic}}
+           : {{$candidates[0]->spon_name_english}}
           </div>
        
-        
+          @php
+            // dd($candidates[0])
+          @endphp
           <div class="basis-6/12 flex text-2xl font-semibold p-1">
             Second Party
           </div>
@@ -1315,7 +1320,7 @@
               <td class="uppercase"></td>
               <td class="uppercase"></td>
               <td class="uppercase font-bold text-xl arb" contentEditable="true">
-                {{$candidates[0]->prof_name_arabic}}
+                {{$candidates[0]->prof_name_english}}
               </td>
               <td class=" font-bold text-xl text-end"> Profession/<span class="arb">المهنة </span></td>
             </tr>
