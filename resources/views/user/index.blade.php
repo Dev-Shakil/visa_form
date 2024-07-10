@@ -42,7 +42,23 @@
       display: inline-block;
     /* If you want dots under the hoverable text */
       }
-    
+      .transition-opacity {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .transition-transform {
+            transition: transform 0.3s ease-in-out;
+        }
+        .transform-hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            display: none;
+        }
+        .transform-visible {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+            transition
+        }
     /* Tooltip text */
     .tooltip .tooltiptext {
       visibility: hidden;
@@ -205,23 +221,62 @@
         </div>
       </div>
     </div>
-    {{-- <div class="modal fade" id="warning" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+  
+    <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content ">
           <div class="modal-header bg-indigo-300">
-            <h5 class="modal-title text-black font-semibold" id="warningModalLabel">Warning</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="agentModalLabel">Add New Agent</h5>
+            <button type="button" class="btn-close btn text-red-700 font-bold" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            sdf
-          </div>
+
+         
+          <div class="modal-body ">
+            <form class="row g-3" id="addagent" action="{{route('agent/index')}}" method="post" enctype="multipart/form-data">
+              @csrf
+              <div class="">
+                  <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                      <div class="py-1">
+                          <div class="font-semibold text-lg">Agent's Name</div>
+                          <input type="text" class="form-control uppercase" required id="agent_name" name="agent_name" placeholder="">
+                      </div>
+                      <div class="py-1">
+                          <div class="font-semibold text-lg">Agent's Phone Number</div>
+                          <input type="number" class="form-control uppercase" required id="agent_phone" name="agent_phone" placeholder="">
+                      </div>
+                      <div class="py-1">
+                          <div class="font-semibold text-lg">Agent's Email</div>
+                          <input type="email" class="form-control" required id="agent_email" name="agent_email" placeholder="">
+                      </div>
+                      <div class="py-1">
+                          <div class="font-semibold text-lg">Agent's Address</div>
+                          <input type="text" class="form-control uppercase" id="agent_address" name="agent_address" placeholder="">
+                      </div>
+                      <div class="py-1">
+                          <div class="font-semibold text-lg">Agent's Emergency Phone No</div>
+                          <input type="text" class="form-control uppercase" id="agent_e_phone" name="agent_e_phone" placeholder="">
+                      </div>
+                      <div class="py-1">
+                          <div class="font-semibold text-lg">Agent's Picture</div>
+                          <input type="file" class="form-control" id="agent_picture" name="agent_picture">
+                      </div>
+                  </div>
+              </div>
+              <div class="text-center">
+                  <button type="submit" class="bg-[#289788] hover:bg-[#074f56] p-3 rounded text-white font-semibold">
+                      Add Agent
+                  </button>
+              </div>
+          </form>
+          
+          </div>  
           <div class="modal-footer">
-            <button type="button" class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white" data-bs-dismiss="modal">Close</button>
-           
+            <button type="button" class=" bg-[#074f56] p-3 rounded text-white font-semibold" data-bs-dismiss="modal">Close</button>
+        
           </div>
         </div>
       </div>
-    </div> --}}
+    </div>
 
     <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">
@@ -496,19 +551,63 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="viewAgentModal" tabindex="-1" aria-labelledby="viewAgentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="viewAgentModalLabel">Agent Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="agentDetails">
+            
+          </div>
+        </div>
+      </div>
+    </div>
      
     
 
   
   <!-- End Hero -->
   <div class="container my-5 hello">
-    <div class="flex justify-end">
-    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport" class="bg-indigo-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="flex justify-end ">
+    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport" class="bg-indigo-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2 mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Add candidate
   </button>
-    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent" class="bg-indigo-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2" data-bs-toggle="modal" data-bs-target="#agentModal">
+
+    <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent" class="bg-indigo-500 mr-2 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2" data-bs-toggle="modal" data-bs-target="#agentModal">
       Add Agent
   </button>
+  <a href="{{ route('agent_candidate') }}" data-toggle="tooltip" data-placement="bottom" title="Report">
+        <button type="button" class="mr-2 bg-yellow-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2">
+            Report
+        </button>
+      </a>
+
+  <div class="relative inline-block text-left">
+    <div>
+        <button type="button" class="bg-indigo-500 text-white font-semibold text-xl px-14 py-2 rounded-md flex gap-2 items-center" id="menu-button">
+            Entry Options
+            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+        </button>
+    </div>
+    <div id="menu-dropdown" class="absolute right-0 z-10 mt-1 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transform-hidden transition-opacity transition-transform" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+        <div class="py-1" role="none">
+            <a href="/medicalEntry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-0">Medical Entry</a>
+            <a href="/mofa_entry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-1">Mofa Entry</a>
+            <a href="/biometric_entry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-2">Biometric Entry</a>
+            <a href="/issued_visa_entry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-2">Issued Visa Entry</a>
+            <a href="/training_finger_entry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-2">Traing And Finger Entry</a>
+            <a href="/flight_entry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-2">Flight Entry</a>
+            <a href="/delivery_entry" class="block px-4 py-2 text-md text-gray-700 hover:bg-gray-300" role="menuitem" id="menu-item-2">Delivery Entry</a>
+            
+        </div>
+    </div>
+</div>
+  
 </div>
     <div class="table-responsive main-datatable ">
         <form method="GET" action="{{ route('user/index') }}">
@@ -535,31 +634,31 @@
         <tbody class="bg-gray-400">
           @foreach($candidates as $candidate)
           @php
-  $dob = $candidate->date_of_birth;
-  $birthdate = new DateTime($dob);
-  $currentDate = new DateTime();
+            $dob = $candidate->date_of_birth;
+            $birthdate = new DateTime($dob);
+            $currentDate = new DateTime();
 
-  // Calculate the difference between the current date and the date of birth
-  $ageInterval = $birthdate->diff($currentDate);
+            // Calculate the difference between the current date and the date of birth
+            $ageInterval = $birthdate->diff($currentDate);
 
-  // Extract the years, months, and days from the calculated interval
-  $years = $ageInterval->y;
-  $months = $ageInterval->m;
-  $days = $ageInterval->d;
+            // Extract the years, months, and days from the calculated interval
+            $years = $ageInterval->y;
+            $months = $ageInterval->m;
+            $days = $ageInterval->d;
 
-  // Format the age as "X years, Y months, Z days"
-  $age = "";
-  if ($years > 0) {
-      $age .= $years . " year" . ($years > 1 ? "s" : "");
-  }
-  // if ($months > 0) {
-  //     $age .= ($age ? ", " : "") . $months . " month" . ($months > 1 ? "s" : "");
-  // }
-  // if ($days > 0) {
-  //     $age .= ($age ? ", " : "") . $days . " day" . ($days > 1 ? "s" : "");
-  // }
+            // Format the age as "X years, Y months, Z days"
+            $age = "";
+            if ($years > 0) {
+                $age .= $years . " year" . ($years > 1 ? "s" : "");
+            }
+            // if ($months > 0) {
+            //     $age .= ($age ? ", " : "") . $months . " month" . ($months > 1 ? "s" : "");
+            // }
+            // if ($days > 0) {
+            //     $age .= ($age ? ", " : "") . $days . " day" . ($days > 1 ? "s" : "");
+            // }
 
-@endphp
+          @endphp
           <div class="modal fade " id="addVisaModal" tabindex="-1" aria-labelledby="addVisaModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
               <div class="modal-content">
@@ -747,7 +846,7 @@
               </div>
             </div>
           </div>
-        </div>
+    </div>
 @else
   <div class="md:text-lg text-md">
     <a href="{{ route('user/print', ['id' => $candidate->id]) }}" 
@@ -1158,7 +1257,35 @@ function formatDate(date) {
 
   return year + '-' + month + '-' + day;
 }
+        // JavaScript to toggle the dropdown menu
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('menu-button');
+            const menuDropdown = document.getElementById('menu-dropdown');
 
+            menuButton.addEventListener('mouseenter', function () {
+                menuDropdown.classList.remove('transform-hidden');
+                menuDropdown.classList.add('transform-visible');
+            });
+
+            menuButton.addEventListener('mouseleave', function (event) {
+                if (!menuDropdown.contains(event.relatedTarget)) {
+                    menuDropdown.classList.remove('transform-visible');
+                    menuDropdown.classList.add('transform-hidden');
+                }
+            });
+
+            menuDropdown.addEventListener('mouseenter', function () {
+                menuDropdown.classList.remove('transform-hidden');
+                menuDropdown.classList.add('transform-visible');
+            });
+
+            menuDropdown.addEventListener('mouseleave', function (event) {
+                if (!menuButton.contains(event.relatedTarget)) {
+                    menuDropdown.classList.remove('transform-visible');
+                    menuDropdown.classList.add('transform-hidden');
+                }
+            });
+        });
 
 </script>
 

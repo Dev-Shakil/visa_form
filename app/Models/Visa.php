@@ -10,7 +10,7 @@ class Visa extends Model
     use HasFactory;
     public function candidate()
     {
-        return $this->belongsTo(Candidate::class);
+        return $this->belongsTo(Candidates::class);
     }
 
 }

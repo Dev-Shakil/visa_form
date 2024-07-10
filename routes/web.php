@@ -9,6 +9,8 @@ use App\Http\Controllers\EmbassyController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\BkashTokenizePaymentController;
+use App\Http\Controllers\EntryController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +31,27 @@ Route::get('/', function () {
 #verification route
 Route::any('/signup', [ViewController::class, 'signup'])->name('signup');
 Route::any('/login', [ViewController::class, 'login'])->name('login');
+
+
+//agent routes
+Route::get('/agent/edit/{id}', [AgentController::class, 'edit'])->name('agent.edit');
+Route::post('/agent/update', [AgentController::class, 'update'])->name('agent.update');
+Route::get('/agent/view/{id}', [AgentController::class, 'view'])->name('agent.view');
+Route::delete('/agent/delete/{id}', [AgentController::class, 'destroy'])->name('agent.delete');
+
+//reporter routes
+Route::get('/agent-candidate', [ReportController::class, 'agentCandidate'])->name('agent_candidate');
+Route::post('/agent_candidate_report', [ReportController::class, 'agent_candidate_report'])->name('agent_candidate_report');
+
+//Other Entries routes
+Route::get('/medicalEntry', [EntryController::class, 'medicalEntry'])->name('medicalEntry');
+Route::get('/issued_visa_entry', [EntryController::class, 'IssuedVisaEntry'])->name('IssuedVisaEntry');
+Route::get('/mofa_entry', [EntryController::class, 'MofaEntry'])->name('MofaEntry');
+Route::get('/biometric_entry', [EntryController::class, 'BiometricEntry'])->name('BiometricEntry');
+Route::get('/manpower_entry', [EntryController::class, 'ManpowerEntry'])->name('ManpowerEntry');
+Route::get('/training_finger_entry', [EntryController::class, 'TrainingFingerEntry'])->name('TrainingFingerEntry');
+Route::get('/flight_entry', [EntryController::class, 'FlightEntry'])->name('FlightEntry');
+Route::get('/delivery_entry', [EntryController::class, 'DeliveryEntry'])->name('DeliveryEntry');
 
 // Route::middleware('csrf')->any('/login', [ViewController::class, 'login'])->name('login');
 Route::get('/forget-password', [ViewController::class, 'forgetPassword'])->name('forget-password');
